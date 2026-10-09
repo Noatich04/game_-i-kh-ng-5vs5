@@ -28,6 +28,7 @@ scene.fog = new THREE.Fog(0x09101a, 45, 145);
 const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.05, 180);
 camera.rotation.order = 'YXZ';
 camera.position.set(-54, 1.7, 0);
+scene.add(camera);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
