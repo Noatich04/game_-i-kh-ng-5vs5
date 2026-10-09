@@ -24,6 +24,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check game JavaScript syntax
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path("index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r'<script type="module">(.*?)</script>', html, flags=re.S | re.I)
+          if len(scripts) != 1:
+              raise SystemExit(f"Expected exactly one module script, found {len(scripts)}")
+          Path("/tmp/strike-five-check.mjs").write_text(scripts[0], encoding="utf-8")
+          PY
+          node --check /tmp/strike-five-check.mjs
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
